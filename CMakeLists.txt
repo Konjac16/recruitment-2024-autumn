@@ -1,15 +1,14 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.22.1)
 project(heptagon_24autumn_recruitment CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
-
+set(CMAKE_CXX_FLAGS "-Wl,--stack=999999999")
 include_directories(include)
 
 file(GLOB SOURCE_FILES "src/*.cc" "main.cc")
-
 add_executable (SmithWaterman ${SOURCE_FILES})
 
 enable_testing()

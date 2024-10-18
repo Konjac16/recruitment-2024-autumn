@@ -157,13 +157,11 @@ void SmithWaterman::pair_align(FastaSequence& query_seq,
   __m256i vH,vMAX,_0;
   vH = vMAX = _0 = _mm256_set1_epi32(0);
   int32_t e[8];
-  std::vector<__m256i> vLoadH(qLens + 1,_mm256_set1_epi32(0)),vStoreH(qLens + 1,_mm256_set1_epi32(0));
-  // __m256i* vLoadH = (__m256i*)_mm_malloc((qLens + 1) * sizeof(__m256i), 32);
-  // __m256i* vStoreH = (__m256i*)_mm_malloc((qLens + 1) * sizeof(__m256i), 32);
-  // __m256i* vLoadH = (__m256i*)aligned_alloc(32, (qLens + 1) * sizeof(__m256i));
-  // __m256i* vStoreH = (__m256i*)aligned_alloc(32, (qLens + 1) * sizeof(__m256i));
-  // std::fill(vLoadH, vLoadH + qLens + 1, _0);
-  // std::fill(vStoreH, vStoreH + qLens + 1, _0);
+  // std::vector<__m256i> vLoadH(qLens + 1,_mm256_set1_epi32(0)),vStoreH(qLens + 1,_mm256_set1_epi32(0));
+  __m256i* vLoadH = (__m256i*)_mm_malloc((qLens + 1) * sizeof(__m256i), 32);
+  __m256i* vStoreH = (__m256i*)_mm_malloc((qLens + 1) * sizeof(__m256i), 32);
+  std::fill(vLoadH, vLoadH + qLens + 1, _0);
+  std::fill(vStoreH, vStoreH + qLens + 1, _0);
   for(int32_t j(1);j <= target_seq_length; j++){
     __m256i vF = _mm256_set1_epi32(0);
     // __m256i shifted = _mm256_srli_si256(vStoreH[j], 4);
@@ -212,10 +210,14 @@ void SmithWaterman::pair_align(FastaSequence& query_seq,
   for(int i = 0; i < 8; i++)Max = std::max(Max,values[i]);
   // max_scores.emplace_back(Max);
   max_scores[idx] = Max;
-  // _mm_free(vLoadH);
-  // _mm_free(vStoreH);
-  // if(vLoadH != NULL)free(vLoadH),vLoadH = NULL;
-  // if(vStoreH != NULL)free(vStoreH),vStoreH = NULL;
+  if(vLoadH != nullptr){
+    _mm_free(vLoadH);
+    vLoadH = nullptr;
+  }
+  if(vStoreH != nullptr){
+    _mm_free(vStoreH);
+    vStoreH = nullptr;
+  }
 }
 
 int SmithWaterman::validate(const std::string& ref_path) {
