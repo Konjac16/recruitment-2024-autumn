@@ -114,10 +114,10 @@ std::vector<size_t> SmithWaterman::solve() {
     for (auto& target_seq : target_seqs) {
       size_t target_seq_length = target_seq.sequence.size();
       // Pairwise-Alignment
-      pool.enqueue([this, &query_seq, &target_seq, query_seq_length, target_seq_length, idx]() {
-          this->pair_align(query_seq, target_seq, query_seq_length, target_seq_length, idx);
-      });
-      // pair_align(query_seq, target_seq, query_seq_length, target_seq_length, idx);
+      // pool.enqueue([this, &query_seq, &target_seq, query_seq_length, target_seq_length, idx]() {
+      //     this->pair_align(query_seq, target_seq, query_seq_length, target_seq_length, idx);
+      // });
+      pair_align(query_seq, target_seq, query_seq_length, target_seq_length, idx);
       ++idx;
       
     }
