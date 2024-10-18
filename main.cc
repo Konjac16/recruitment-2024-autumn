@@ -1,3 +1,6 @@
+// #pragma GCC optimize("inline-small-functions")
+#pragma GCC optimize(2)
+#pragma GCC optimize(3,"Ofast","inline")
 #include <filesystem>
 #include <iostream>
 #include <stdexcept>
@@ -20,9 +23,9 @@ int main(int argc, char **argv) {
   std::filesystem::path ref_path = argv[3];
 
   SmithWaterman solver = SmithWaterman(query_seq_path, target_seq_path);
-
+  // timer.tick("111");
   solver.solve();
-
+  // timer.tick("111");
   auto res = solver.validate(ref_path);
 
   return res;

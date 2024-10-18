@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <memory>
 
 struct FastaSequence {
   std::string description;
@@ -23,9 +24,9 @@ class SmithWaterman {
   void report() const;
 
  private:
-  static constexpr int64_t match_score = 5;      // Do not modify.
-  static constexpr int64_t mismatch_score = -3;  // Do not modify.
-  static constexpr int64_t gap_score = -4;       // Do not modify.
+  static constexpr int32_t match_score = 5;      // Do not modify.
+  static constexpr int32_t mismatch_score = -3;  // Do not modify.
+  static constexpr int32_t gap_score = -4;       // Do not modify.
 
   // The query/target sequences
   std::vector<FastaSequence> query_seqs;
@@ -39,8 +40,8 @@ class SmithWaterman {
   size_t target_seqs_size;
 
   // Length of each sequence
-  std::vector<std::vector<int64_t>> query_seqs_lens;
-  std::vector<std::vector<int64_t>> target_seqs_lens;
+  std::vector<std::vector<int32_t>> query_seqs_lens;
+  std::vector<std::vector<int32_t>> target_seqs_lens;
 
   // similarity matrix(scoring matrix)
   std::vector<size_t> H;
@@ -55,5 +56,5 @@ class SmithWaterman {
   void read_ref(const std::string& ref_path, std::vector<size_t>& refs);
 
   void pair_align(FastaSequence& query_seq, FastaSequence& target_seq,
-                  size_t query_seq_length, size_t target_seq_length);
+                  size_t query_seq_length, size_t target_seq_length, size_t idx);
 };
