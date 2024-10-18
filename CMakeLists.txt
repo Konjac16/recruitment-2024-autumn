@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
-set(CMAKE_CXX_FLAGS "-Wl,--stack=999999999")
 include_directories(include)
 
 file(GLOB SOURCE_FILES "src/*.cc" "main.cc")

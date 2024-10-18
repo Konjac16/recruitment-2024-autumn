@@ -1,4 +1,5 @@
 // #pragma GCC optimize("inline-small-functions")
+#pragma comment(linker, "/STACK:1024000000,1024000000")
 #pragma GCC optimize("-ftree-vectorize")
 #pragma GCC target("avx2")
 #pragma GCC optimize(2)
